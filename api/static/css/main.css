@@ -1,5 +1,8 @@
+body {
+    padding-top: 15px;
+}
 header {
-    padding: 20px;
+    padding: 0px;
 }
 .container {
     width: 60%;

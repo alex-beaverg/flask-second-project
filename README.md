@@ -1,1 +1,1 @@
-# Flask second project + vercel
+# Flask second project
