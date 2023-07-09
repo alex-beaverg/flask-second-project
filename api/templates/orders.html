@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    DB Orders
+{% endblock %}
+
+{% block body %}
+    <header class="container">
+        <h1>Data Base Orders</h1>
+    </header>
+    <aside>
+
+    </aside>
+    <main class="container">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Connection</th>
+                    <th>Integration</th>
+                    <th>Payment method</th>
+                    <th>Payers</th>
+                    <th>Payment system</th>
+                    <th>Bank</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in all_orders %}
+                    <tr>
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.client }}</td>
+                        <td>{{ item.connection }}</td>
+                        <td>{{ item.integration }}</td>
+                        <td>{{ item.payment_method }}</td>
+                        <td>{{ item.payers }}</td>
+                        <td>{{ item.payment_system }}</td>
+                        <td>{{ item.bank }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </main>
+{% endblock %}
