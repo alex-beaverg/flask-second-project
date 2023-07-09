@@ -1,15 +1,82 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Internet acquiring HTML form</title>
-</head>
-<body>
-    <header>
-        Internet acquiring HTML form
+{% extends 'base.html' %}
+
+{% block title %}
+    IA HTML form
+{% endblock %}
+
+{% block body %}
+    <header class="container">
+        <h1>Internet acquiring HTML form</h1>
     </header>
-</body>
-</html>
+    <aside>
+
+    </aside>
+    <main id="for_form" class="container">
+        <form method="post" name="acquiring_form" class="needs-validation" novalidate>
+            <input type="text" name="client" id="client" class="form-control" placeholder="Client (Name Surname)" required>
+            <br>
+            <select id="connection" name="connection" class="form-select" required>
+                <option disabled selected hidden value="">Choose a 'Connection'</option>
+                <option value="With website">With website</option>
+                <option value="Without website">Without website</option>
+                <option value="With mobile application">With mobile application</option>
+            </select>
+            <br>
+            <select id="integration" name="integration" class="form-select" required>
+                <option disabled selected hidden value="">Choose an 'Integration'</option>
+                <option value="Without integration">Without integration</option>
+                <option value="Wordpress">Wordpress</option>
+                <option value="Joomla">Joomla</option>
+                <option value="Deal">Deal</option>
+                <option value="Tilda">Tilda</option>
+            </select>
+            <br>
+            <select id="payment_method" name="payment_method" class="form-select" required>
+                <option disabled selected hidden value="">Choose a 'Payment method'</option>
+                <option value="Card">Card</option>
+                <option value="ERIP">ERIP</option>
+                <option value="QR code">QR code</option>
+            </select>
+            <br>
+            <select id="payers" name="payers" class="form-select" required>
+                <option disabled selected hidden value="">Choose a 'Payers'</option>
+                <option value="Residents">Residents</option>
+                <option value="Non-residents">Non-residents</option>
+                <option value="Both types">Both types</option>
+            </select>
+            <br>
+            <select id="payment_system" name="payment_system" class="form-select" required>
+                <option disabled selected hidden value="">Choose a 'Payment system'</option>
+                <option value="Belcard">Belcard</option>
+                <option value="MIR">MIR</option>
+                <option value="Other types">Other types</option>
+            </select>
+            <br>
+            <select id="bank" name="bank" class="form-select" required>
+                <option disabled selected hidden value="">Choose a 'Bank'</option>
+                <option value="Priorbank">Priorbank</option>
+                <option value="BelVEB">BelVEB</option>
+                <option value="Other banks">Other banks</option>
+            </select>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Send an order">
+            <script>
+                (function () {
+                    'use strict'
+                    var forms = document.querySelectorAll('.needs-validation')
+                    Array.prototype.slice.call(forms)
+                        .forEach(function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                }
+                                form.classList.add('was-validated')
+                            }, false)
+                        })
+                })()
+            </script>
+        </form>
+        <br>{{ info }}
+    </main>
+{% endblock %}
