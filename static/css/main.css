@@ -1,5 +1,6 @@
 body {
     padding-top: 15px;
+    background: #f3f4ff;
 }
 header {
     padding-bottom: 20px;
@@ -8,3 +9,8 @@ header {
     width: 60%;
     text-align: center;
 }
+.btn-danger {
+    height: 30px;
+    padding: 1px 15px 0px 15px;
+}
+

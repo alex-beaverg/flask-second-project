@@ -20,6 +20,7 @@
                     <th>Payers</th>
                     <th>Payment system</th>
                     <th>Bank</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                         <td>{{ item.payers }}</td>
                         <td>{{ item.payment_system }}</td>
                         <td>{{ item.bank }}</td>
+                        <td><a href="/orders/{{ item.id }}/delete" class="btn btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

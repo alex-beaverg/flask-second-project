@@ -12,7 +12,7 @@
         <form method="post" name="acquiring_form" class="needs-validation" novalidate>
             <input type="text" name="client" id="client" class="form-control" placeholder="Client (Name Surname)" required>
             <br>
-            <select id="connection" name="connection" class="form-select" required>
+            <select id="connection" name="connection" class="form-select" required onchange="choose_connection_item()">
                 <option disabled selected hidden value="">Choose a 'Connection'</option>
                 <option value="With website">With website</option>
                 <option value="Without website">Without website</option>
@@ -28,21 +28,21 @@
                 <option value="Tilda">Tilda</option>
             </select>
             <br>
-            <select id="payment_method" name="payment_method" class="form-select" required>
+            <select id="payment_method" name="payment_method" class="form-select" required onchange="choose_item()">
                 <option disabled selected hidden value="">Choose a 'Payment method'</option>
                 <option value="Card">Card</option>
                 <option value="ERIP">ERIP</option>
                 <option value="QR code">QR code</option>
             </select>
             <br>
-            <select id="payers" name="payers" class="form-select" required>
+            <select id="payers" name="payers" class="form-select" required onchange="choose_payers_item()">
                 <option disabled selected hidden value="">Choose a 'Payers'</option>
                 <option value="Residents">Residents</option>
                 <option value="Non-residents">Non-residents</option>
                 <option value="Both types">Both types</option>
             </select>
             <br>
-            <select id="payment_system" name="payment_system" class="form-select" required>
+            <select id="payment_system" name="payment_system" class="form-select" required onchange="choose_item()">
                 <option disabled selected hidden value="">Choose a 'Payment system'</option>
                 <option value="Belcard">Belcard</option>
                 <option value="MIR">MIR</option>
@@ -58,7 +58,7 @@
             <br>
             <input type="submit" class="btn btn-primary" value="Send an order">
             <script>
-                (function () {
+                (function() {
                     'use strict'
                     var forms = document.querySelectorAll('.needs-validation')
                     Array.prototype.slice.call(forms)
@@ -71,7 +71,48 @@
                                 form.classList.add('was-validated')
                             }, false)
                         })
-                })()
+                })();
+
+                function choose_connection_item() {
+                    if (connection.value == 'Without website' || connection.value == 'With mobile application') {
+                        integration.disabled = true;
+                        integration.value = 'Without integration';
+                    } else {
+                        integration.disabled = false;
+                    }
+                }
+
+                function choose_payers_item() {
+                    if (payers.value == 'Non-residents' || payers.value == 'Both types') {
+                        if (payment_system.value != 'MIR') {
+                            payment_system.value = '';
+                        }
+                        payment_system.options[1].hidden = true;
+                        payment_system.options[3].hidden = true;
+                    } else {
+                        payment_system.options[1].hidden = false;
+                        payment_system.options[3].hidden = false;
+                    }
+                }
+
+                function choose_item() {
+                    if (payment_method.value == 'QR code') {
+                        if (bank.value != 'BelVEB' || bank.value != '') {
+                            bank.value = '';
+                        }
+                        bank.options[1].hidden = true;
+                        bank.options[3].hidden = true;
+                    } else if (payment_method.value != 'QR code' && payment_system.value == 'MIR') {
+                        if (bank.value == 'Priorbank') {
+                            bank.value = '';
+                        }
+                        bank.options[1].hidden = true;
+                        bank.options[3].hidden = false;
+                    } else {
+                        bank.options[1].hidden = false;
+                        bank.options[3].hidden = false;
+                    }
+                }
             </script>
         </form>
     </main>

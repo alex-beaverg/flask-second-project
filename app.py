@@ -23,23 +23,20 @@ class Information(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        info = {
-            'client': request.form['client'],
-            'connection': request.form['connection'],
-            'integration': request.form['integration'],
-            'payment_method': request.form['payment_method'],
-            'payers': request.form['payers'],
-            'payment_system': request.form['payment_system'],
-            'bank': request.form['bank']
-        }
+        connection = request.form['connection']
+        if connection != 'With website':
+            integration = 'Without integration'
+        else:
+            integration = request.form['integration']
+
         information = Information(
-            client=info['client'],
-            connection=info['connection'],
-            integration=info['integration'],
-            payment_method=info['payment_method'],
-            payers=info['payers'],
-            payment_system=info['payment_system'],
-            bank=info['bank']
+            client=request.form['client'],
+            connection=connection,
+            integration=integration,
+            payment_method=request.form['payment_method'],
+            payers=request.form['payers'],
+            payment_system=request.form['payment_system'],
+            bank=request.form['bank']
         )
         try:
             db.session.add(information)
@@ -55,6 +52,17 @@ def index():
 def orders():
     all_orders = Information.query.order_by(Information.id).all()
     return render_template('orders.html', all_orders=all_orders)
+
+
+@app.route('/orders/<int:order_id>/delete')
+def post_delete(order_id):
+    order = Information.query.get_or_404(order_id)
+    try:
+        db.session.delete(order)
+        db.session.commit()
+        return redirect('/orders')
+    except:
+        return "[ERROR]: Order has not been deleted!"
 
 
 if __name__ == '__main__':
